@@ -55,4 +55,22 @@ class Cities: NSObject {
         temp.removeFirst(10)
         return temp
     }
+    
+    func getDirction() -> String {
+        
+        switch Int(self.wind_deg!) {
+        case 336...360: return "N"
+        case 0...22: return "N"
+        case 22...66: return "NE"
+        case 66...111: return "E"
+        case 111...156: return "SE"
+        case 156...201: return "S"
+        case 201...246: return "SW"
+        case 246...291: return "W"
+        case 291...336: return "NW"
+            
+        default:
+         return "Oopsi"
+        }
+    }
 }

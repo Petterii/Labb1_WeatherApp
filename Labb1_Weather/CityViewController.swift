@@ -60,7 +60,7 @@ class CityViewController: UIViewController {
             JsonCommands.getCitiesFromWeb(url: url, onDone: {
                 (cities) in
                 self.cities = cities
-           // self.applyInfo()
+      
                 self.viewDidAppear(true)
             })
         }
@@ -74,12 +74,12 @@ class CityViewController: UIViewController {
         title = cities[0].cityName
         skyInfo.text = cities[0].sky
         windSpeed.text = "Wind: \(cities[0].wind_speed) m/s"
-        windDegrees.text = "Wind Deg: \(cities[0].wind_deg ?? -10)°"
+        windDegrees.text = "Wind Deg: \(cities[0].getDirction())"
         seaLevel.text = "Sea Level: \(cities[0].sea_level ?? -10)"
         humidity.text = "Humidity: \(cities[0].humidity)"
         currenttime.text = "Time: \(cities[0].dt_txt)"
         
-        //cities[0].dt_txt.removeFirst(10)
+  
         
         day1.text = cities[0].getHours()
         day2.text = cities[1].getHours()
@@ -109,14 +109,6 @@ class CityViewController: UIViewController {
             
         }
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -16,7 +16,6 @@
 		7208D213205BED2E001F7DCA /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7208D212205BED2E001F7DCA /* MyTableViewCell.swift */; };
 		72A8565F206B95EA0016AD42 /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8565E206B95EA0016AD42 /* CityViewController.swift */; };
 		72F4FFD0205D27CC002893B1 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F4FFCF205D27CC002893B1 /* Cities.swift */; };
-		72F4FFD5205EA064002893B1 /* city.list.json in Resources */ = {isa = PBXBuildFile; fileRef = 72F4FFD4205EA064002893B1 /* city.list.json */; };
 		72F4FFD720611C46002893B1 /* JsonCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F4FFD620611C46002893B1 /* JsonCommands.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +31,6 @@
 		7208D212205BED2E001F7DCA /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		72A8565E206B95EA0016AD42 /* CityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
 		72F4FFCF205D27CC002893B1 /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
-		72F4FFD4205EA064002893B1 /* city.list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.list.json; sourceTree = "<group>"; };
 		72F4FFD620611C46002893B1 /* JsonCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCommands.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,7 +64,6 @@
 		7208D1FB205BEBFF001F7DCA /* Labb1_Weather */ = {
 			isa = PBXGroup;
 			children = (
-				72F4FFD4205EA064002893B1 /* city.list.json */,
 				7208D1FC205BEBFF001F7DCA /* AppDelegate.swift */,
 				7208D1FE205BEBFF001F7DCA /* ViewController.swift */,
 				7208D200205BEBFF001F7DCA /* Main.storyboard */,
@@ -142,7 +139,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7208D207205BEBFF001F7DCA /* LaunchScreen.storyboard in Resources */,
-				72F4FFD5205EA064002893B1 /* city.list.json in Resources */,
 				7208D204205BEBFF001F7DCA /* Assets.xcassets in Resources */,
 				7208D202205BEBFF001F7DCA /* Main.storyboard in Resources */,
 			);
@@ -298,6 +294,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Labb1_Weather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -312,6 +309,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Labb1_Weather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -13,20 +13,33 @@ import UIKit
 
 
 
-class DetailViewController: UIViewController,UITableViewDelegate, UITableViewDataSource  {
+class DetailViewController: UIViewController {
+    @IBOutlet weak var currentTime: UILabel!
+    @IBOutlet weak var iconImage: UIImageView!
+    
+    @IBOutlet weak var currentTemp: UILabel!
+    @IBOutlet weak var sky: UILabel!
+    @IBOutlet weak var windSpeed: UILabel!
+    @IBOutlet weak var windDeg: UILabel!
+    @IBOutlet weak var seaLevel: UILabel!
+    @IBOutlet weak var humidity: UILabel!
+    
+    
+    
+    
+    
+    
     @IBOutlet weak var searchBar: UITextField!
     
+    var icons :  [String : UIImage] = [:]
     var cities : [Cities] = []
-   // var places : Array<Places> = Array()
+
     
     @IBOutlet weak var textResult: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.delegate = self
-        tableView.dataSource = self
         
         
 
@@ -64,16 +77,12 @@ class DetailViewController: UIViewController,UITableViewDelegate, UITableViewDat
                 print("error:\(error)")
             }
         }
-    //    catch{}
-       
     }
     
     var searchParams : String!
-    ///////// JSON stuff FROM WEBSITE    ///////////////
+ 
+    
     @IBAction func search(_ sender: Any) {
-    //    buildLocalJson()
-        
-        
     if let safeString = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
         
         let url = URL(string: "http://api.openweathermap.org/data/2.5/forecast?q=\(safeString)&APPID=0b097aa7c90c1fe75898c100483bfa96") {
@@ -84,48 +93,15 @@ class DetailViewController: UIViewController,UITableViewDelegate, UITableViewDat
             // kanske inte funkar testa
             // förut self.cities = cities
             self.cities.append(cities[0])
-            self.tableView.reloadData()
+            self.applyInfo()
+            self.viewDidLoad()
         })
             //self.tableview.reload()
         }
           
     }
     
-    /////////////
-    /// tableview stuff
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.rowHeight = UITableViewAutomaticDimension
-        let cell = tableView.dequeueReusableCell(withIdentifier: "aCell", for: indexPath) as! MyTableViewCell
-        if indexPath.section == 1 {
-            cell.backgroundColor = UIColor.gray
-        }
-        if indexPath.section == 0 {
-           //  cell.backgroundColor = UIColor
-           // cell.cellImage.image =
-            cell.cellCity.text = cities[indexPath.row].cityName
-            cell.cellTemp.text = String(format:"%d°C", Int(cities[indexPath.row].temp))
-            
-        }
-        
-        return cell
-        
-    }
-    
-
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 { return cities.count }
-        if section == 1 { return cities.count }
-        return 0
-    }
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    // method to run when table view cell is tapped
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Saved this city \(cities[0].cityName ?? "no City").")
+    @IBAction func saveCity(_ sender: Any) {
         if let storedCities = UserDefaults.standard.string(forKey: "Cities") {
             print("Found nil \(cities[0].cityName).")
             UserDefaults.standard.set("\(storedCities),\(cities[0].cityId)", forKey: "Cities")
@@ -140,15 +116,34 @@ class DetailViewController: UIViewController,UITableViewDelegate, UITableViewDat
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func getIcon(indexPath : Int) -> UIImage? {
+        if let icon = icons[cities[indexPath].icon] {
+            return icon
+        } else {
+            JsonCommands.downloadImage(url: URL(string: cities[indexPath].icon)!,onDone:  {
+                iconImage in
+                self.icons[self.cities[indexPath].icon] = iconImage
+                self.applyInfo()
+                self.viewDidLoad()
+            }
+            )
+            
+            return nil
+            
+        }
     }
-    */
+    
+    func applyInfo() {
+        iconImage.image = getIcon(indexPath: 0)
+        title = cities[0].cityName
+        sky.text = cities[0].sky
+        windSpeed.text = "Wind: \(cities[0].wind_speed) m/s"
+        windDeg.text = "Wind Deg: \(cities[0].getDirction())"
+        seaLevel.text = "Sea Level: \(cities[0].sea_level ?? -10)"
+        humidity.text = "Humidity: \(cities[0].humidity)"
+        currentTime.text = "Time: \(cities[0].dt_txt)"
+        
+    }
 
 }

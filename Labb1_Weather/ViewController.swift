@@ -20,15 +20,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var currentId : Int = -1
     var cities : [Cities] = []
     var cityNames : String = ""
-    //var icon : UIImage?
     var icons :  [String : UIImage] = [:]
+    
+    var clothsNow : String = ""
+    
+    
+    var dynamicAnimator : UIDynamicAnimator!
+    var gravity : UIGravityBehavior!
+    var collision : UICollisionBehavior!
+    var push : UIPushBehavior!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
-        print("Getting user poops!!!.")
+        
+        dynamicAnimator = UIDynamicAnimator(referenceView: view)
+        gravity = UIGravityBehavior(items: [currentWind])
+        collision = UICollisionBehavior(items: [currentWind,tableView])
+        collision.translatesReferenceBoundsIntoBoundary = true
+        dynamicAnimator.addBehavior(gravity)
+        dynamicAnimator.addBehavior(collision)
+        
         
         
         //  UserDefaults.standard.removeObject(forKey: "Cities")
@@ -36,6 +50,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func whatCloths() {
+        var weatherNow : String = ""
+        
+        switch (weatherNow) {
+        case "rain": clothsNow = "Rain Jacket"
+        case "snow": clothsNow = "Fat Jacket"
+        case "cold": clothsNow = "Warm Cloths"
+        case "hot": clothsNow = "take of t-short"
+        case "cool": clothsNow = "t-short"
+            
+        default:
+            clothsNow = "Tshirt"
+        }
+            
+        
+        
     }
     
     func jSonGet(){
@@ -135,14 +167,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        currentCity.center = CGPoint(x: 0, y: 0)
+        currentIcon.alpha  = 0.5
+        push = UIPushBehavior(items: [currentWind], mode: .instantaneous)
+        push.pushDirection = CGVector(dx: 0, dy: 2)
+        push.magnitude = 60
+        dynamicAnimator.addBehavior(push)
+       
+        UIView.beginAnimations("Current Weather View", context: nil)
+        currentCity.text = cities[indexPath.row].cityName
+        currentCity.center =  CGPoint(x: 10, y: 10) //
+        currentIcon.alpha = 1
+     
+        UIView.commitAnimations()
+        
         print("You tapped cell number \(indexPath.row).")
         self.currentId = indexPath.row
-        currentCity.text = cities[indexPath.row].cityName
+     
         currentIcon.image = icons[cities[indexPath.row].icon]
         currentTemp.text = String(format:"%d °C", Int(cities[indexPath.row].temp))
         currentClouds.text = cities[indexPath.row].sky
         currentWind.text = "Wind: \(cities[indexPath.row].wind_speed) m/s " // todo change light breeze to something
     }
+    
+
     
 }
 
