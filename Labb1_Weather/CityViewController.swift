@@ -9,7 +9,7 @@
 import UIKit
 
 class CityViewController: UIViewController {
-
+    
     @IBOutlet weak var iconImage: UIImageView!
     
     @IBOutlet weak var skyInfo: UILabel!
@@ -28,27 +28,24 @@ class CityViewController: UIViewController {
     @IBOutlet weak var day3Temp: UILabel!
     @IBOutlet weak var day4Temp: UILabel!
     @IBOutlet weak var day5Temp: UILabel!
+    @IBOutlet weak var temp: UILabel!
     
     
     
     var cities : [Cities] = []
     var id : Int = -1
-     var icons :  [String : UIImage] = [:]
+    var icons :  [String : UIImage] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         getJson()
-        
-   
-        
-        title = "LONDON!"
+        title = "N/A!"
         // Do any additional setup after loading the view.
     }
     override func viewDidAppear(_ animated: Bool) {
         applyInfo()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -56,19 +53,14 @@ class CityViewController: UIViewController {
     
     func getJson() {
         if let url = URL(string: "http://api.openweathermap.org/data/2.5/forecast?id=\(id)&APPID=0b097aa7c90c1fe75898c100483bfa96") {
-            
             JsonCommands.getCitiesFromWeb(url: url, onDone: {
                 (cities) in
                 self.cities = cities
-      
                 self.viewDidAppear(true)
             })
         }
-        
-
-        
     }
-
+    
     func applyInfo() {
         iconImage.image = getIcon(indexPath: 0)
         title = cities[0].cityName
@@ -78,8 +70,8 @@ class CityViewController: UIViewController {
         seaLevel.text = "Sea Level: \(cities[0].sea_level ?? -10)"
         humidity.text = "Humidity: \(cities[0].humidity)"
         currenttime.text = "Time: \(cities[0].dt_txt)"
+        temp.text = "\(Int(cities[0].temp))°"
         
-  
         
         day1.text = cities[0].getHours()
         day2.text = cities[1].getHours()
@@ -104,11 +96,7 @@ class CityViewController: UIViewController {
                 self.viewDidLoad()
             }
             )
-            
             return nil
-            
         }
     }
-
-
 }

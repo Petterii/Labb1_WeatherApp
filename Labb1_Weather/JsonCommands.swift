@@ -13,11 +13,6 @@ struct CityLocal : Codable {
     let id : Int
     let name : String
 }
-/*
- struct discription : Codable {
- let main: String?
- }
- */
 
 struct WindCond: Codable {
     let speed : Double
@@ -78,7 +73,7 @@ class JsonCommands: NSObject {
                     do {
                         let weatherRespons = try decoder.decode(WeatherRespons.self, from: actualData)
                         var i = 0
-                      
+                        
                         repeat {
                             var cityNaaame:String = "dummy"
                             var cityIdd:Int = -1
@@ -86,11 +81,11 @@ class JsonCommands: NSObject {
                             var sea_lvl : Double = 0
                             var wind_Deg : Double = 0
                             
-                         // first group check then single
+                            // first group check then single
                             if let cityName = weatherRespons.list[i].name, let cityId = weatherRespons.list[i].id {
                                 cityNaaame = cityName
                                 cityIdd = cityId
-                        
+                                
                             } else if let cityName = weatherRespons.city?.name, let cityId = weatherRespons.city?.id,
                                 let dtText = weatherRespons.list[i].dt_txt, let windDeg = weatherRespons.list[i].wind.deg, let seaLevel = weatherRespons.list[i].main.sea_level{
                                 cityNaaame = cityName
@@ -100,27 +95,27 @@ class JsonCommands: NSObject {
                                 sea_lvl = seaLevel
                                 
                             }
-                         
+                            
                             let city : Cities = Cities(cityName: cityNaaame,
-                                                          temp:weatherRespons.list[i].main.temp,
-                                                          humidity: weatherRespons.list[i].main.humidity,
-                                                          wind_speed: weatherRespons.list[i].wind.speed,
-                                                          dt_txt: dtTime,
-                                                          sky: weatherRespons.list[i].weather[0].main,
-                                                          icon: String(format:"http://openweathermap.org/img/w/%@.png",
-                                                          weatherRespons.list[i].weather[0].icon) ,
-                                                          cityId: cityIdd,
-                                                          skyInfo: weatherRespons.list[i].weather[0].description,
-                                                          seaLevel: sea_lvl,
-                                                          windDeg: wind_Deg)
+                                                       temp:weatherRespons.list[i].main.temp,
+                                                       humidity: weatherRespons.list[i].main.humidity,
+                                                       wind_speed: weatherRespons.list[i].wind.speed,
+                                                       dt_txt: dtTime,
+                                                       sky: weatherRespons.list[i].weather[0].main,
+                                                       icon: String(format:"http://openweathermap.org/img/w/%@.png",
+                                                                    weatherRespons.list[i].weather[0].icon) ,
+                                                       cityId: cityIdd,
+                                                       skyInfo: weatherRespons.list[i].weather[0].description,
+                                                       seaLevel: sea_lvl,
+                                                       windDeg: wind_Deg)
                             
                             
-                                cities.append(city)
-                                i += 1
-                                
-                                
+                            cities.append(city)
+                            i += 1
                             
-                            } while(i <  weatherRespons.list.count)
+                            
+                            
+                        } while(i <  weatherRespons.list.count)
                         
                         DispatchQueue.main.async {
                             onDone(cities)

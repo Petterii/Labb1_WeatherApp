@@ -73,4 +73,22 @@ class Cities: NSObject {
          return "Oopsi"
         }
     }
+    
+    func whatCloths() -> String {
+        
+        if self.temp > 10 && self.sky.contains("rain") {
+            return "Regn kläder"
+        }
+        else if self.temp > 17{
+            return "Lätt klädd"
+        }
+        else if self.temp < 0 {
+            return "Varma kläder"
+        }
+        else {
+            return "Long Sleeved"
+        }
+        
+        return ""
+    }
 }

@@ -23,29 +23,32 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var windDeg: UILabel!
     @IBOutlet weak var seaLevel: UILabel!
     @IBOutlet weak var humidity: UILabel!
+    @IBOutlet weak var saveButton: UIButton!
     
-    
-    
-    
-    
-    
+    @IBOutlet weak var barrier: UIView!
     @IBOutlet weak var searchBar: UITextField!
     
     var icons :  [String : UIImage] = [:]
-    var cities : [Cities] = []
+    //var cities : [Cities] = []
+    var city : Cities!
+    
+    var dynamicAnimator : UIDynamicAnimator!
+    var gravity : UIGravityBehavior!
+    var collision : UICollisionBehavior!
+    var push : UIPushBehavior!
+    var firstTime : Bool = true
+    var searchParams : String!
+    
 
-    
-    @IBOutlet weak var textResult: UILabel!
-    @IBOutlet weak var tableView: UITableView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-
-        // Do any additional setup after loading the view.
+        if firstTime {
+            firstInit()
+        }
+        saveButton.isEnabled = false
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -53,24 +56,21 @@ class DetailViewController: UIViewController {
     
     ///////// JSON stuff FROM WEBSITE    ///////////////
     func buildLocalJson() {
-        // var ding : CityLocal
         if let url = Bundle.main.url(forResource: "city.list", withExtension: "json") {
             do {
                 let data = try Data(contentsOf: url)
                 let decoder = JSONDecoder()
                 
                 let jsonData = try decoder.decode([CityLocal].self, from: data)
-               
+                
                 let searchResult = jsonData.filter({ $0.name.contains(searchBar.text!)})
                 searchParams = ""
                 for i in 0...searchResult.count-1 {
                     searchParams = "\(searchParams),\(searchResult[i].name)"
                     if i <= searchResult.count{
                         searchParams = "\(searchParams),"
-                        }
                     }
-                
-                
+                }
                 print(searchResult)
                 return
             } catch {
@@ -79,37 +79,37 @@ class DetailViewController: UIViewController {
         }
     }
     
-    var searchParams : String!
- 
-    
     @IBAction func search(_ sender: Any) {
-    if let safeString = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+        push = UIPushBehavior(items: [iconImage], mode: .instantaneous)
+        push.pushDirection = CGVector(dx: 0, dy: 2)
+        push.magnitude = 100
+        dynamicAnimator.addBehavior(push)
+        saveButton.isEnabled = true
         
-        let url = URL(string: "http://api.openweathermap.org/data/2.5/forecast?q=\(safeString)&APPID=0b097aa7c90c1fe75898c100483bfa96") {
-        
-        //    let url = URL(string: "http://api.openweathermap.org/data/2.5/forecast?q=\(safeString)&APPID=0b097aa7c90c1fe75898c100483bfa96") {
-        JsonCommands.getCitiesFromWeb(url: url, onDone: {
-            (cities) in
-            // kanske inte funkar testa
-            // förut self.cities = cities
-            self.cities.append(cities[0])
-            self.applyInfo()
-            self.viewDidLoad()
-        })
-            //self.tableview.reload()
+        if let safeString = searchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+            
+            let url = URL(string: "http://api.openweathermap.org/data/2.5/forecast?q=\(safeString)&APPID=0b097aa7c90c1fe75898c100483bfa96") {
+            
+            //    let url = URL(string: "http://api.openweathermap.org/data/2.5/forecast?q=\(safeString)&APPID=0b097aa7c90c1fe75898c100483bfa96") {
+            JsonCommands.getCitiesFromWeb(url: url, onDone: {
+                (cities) in
+                // kanske inte funkar testa
+                self.city = cities[0]
+                //self.cities.append(cities[0])
+                self.applyInfo()
+                self.viewDidLoad()
+                self.saveButton.isEnabled = true
+            })
+           
         }
-          
+        
     }
     
     @IBAction func saveCity(_ sender: Any) {
         if let storedCities = UserDefaults.standard.string(forKey: "Cities") {
-            print("Found nil \(cities[0].cityName).")
-            UserDefaults.standard.set("\(storedCities),\(cities[0].cityId)", forKey: "Cities")
+            UserDefaults.standard.set("\(storedCities),\(city.cityId)", forKey: "Cities")
         }else {
-            print("Found NOT nil \(cities[0].cityName).")
-            UserDefaults.standard.set("\(cities[0].cityId)", forKey: "Cities")
-            
-            
+            UserDefaults.standard.set("\(city.cityId)", forKey: "Cities")
         }
         if let navController = self.navigationController {
             navController.popViewController(animated: true)
@@ -118,32 +118,49 @@ class DetailViewController: UIViewController {
     
     
     func getIcon(indexPath : Int) -> UIImage? {
-        if let icon = icons[cities[indexPath].icon] {
+        if let icon = icons[city.icon] {
             return icon
         } else {
-            JsonCommands.downloadImage(url: URL(string: cities[indexPath].icon)!,onDone:  {
+            JsonCommands.downloadImage(url: URL(string: city.icon)!,onDone:  {
                 iconImage in
-                self.icons[self.cities[indexPath].icon] = iconImage
+                self.icons[self.city.icon] = iconImage
                 self.applyInfo()
-                self.viewDidLoad()
             }
             )
-            
             return nil
-            
         }
+    }
+    
+    func firstInit() {
+        firstTime = false
+        title = "N/A"
+        sky.text = "N/A"
+        windSpeed.text = "N/A"
+        windDeg.text = "N/A"
+        seaLevel.text = "N/A"
+        humidity.text = "N/A"
+        currentTime.text = "N/A"
+        currentTemp.text = "N/A"
+        
+        dynamicAnimator = UIDynamicAnimator(referenceView: view)
+        gravity = UIGravityBehavior(items: [iconImage])
+        collision = UICollisionBehavior(items: [iconImage])
+        collision.addBoundary(withIdentifier: "barrier" as NSCopying, for: UIBezierPath(rect: barrier.frame))
+        collision.translatesReferenceBoundsIntoBoundary = true
+        dynamicAnimator.addBehavior(gravity)
+        dynamicAnimator.addBehavior(collision)
     }
     
     func applyInfo() {
         iconImage.image = getIcon(indexPath: 0)
-        title = cities[0].cityName
-        sky.text = cities[0].sky
-        windSpeed.text = "Wind: \(cities[0].wind_speed) m/s"
-        windDeg.text = "Wind Deg: \(cities[0].getDirction())"
-        seaLevel.text = "Sea Level: \(cities[0].sea_level ?? -10)"
-        humidity.text = "Humidity: \(cities[0].humidity)"
-        currentTime.text = "Time: \(cities[0].dt_txt)"
-        
+        title = city.cityName
+        sky.text = city.sky
+        windSpeed.text = "Wind: \(city.wind_speed) m/s"
+        windDeg.text = "Wind Deg: \(city.getDirction())"
+        seaLevel.text = "Sea Level: \(city.sea_level ?? -10)"
+        humidity.text = "Humidity: \(city.humidity)"
+        currentTime.text = "Time: \(city.dt_txt)"
+        currentTemp.text = "\(Int(city.temp))°"
     }
-
+    
 }

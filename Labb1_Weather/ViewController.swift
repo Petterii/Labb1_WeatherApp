@@ -14,7 +14,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var currentCity: UILabel!
     @IBOutlet weak var currentClouds: UILabel!
     @IBOutlet weak var currentWind: UILabel!
+    @IBOutlet weak var currentCloths: UILabel!
     
+    @IBOutlet weak var detailButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     var currentId : Int = -1
@@ -24,26 +26,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var clothsNow : String = ""
     
-    
-    var dynamicAnimator : UIDynamicAnimator!
-    var gravity : UIGravityBehavior!
-    var collision : UICollisionBehavior!
-    var push : UIPushBehavior!
-    
+    /*
+
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        dynamicAnimator = UIDynamicAnimator(referenceView: view)
-        gravity = UIGravityBehavior(items: [currentWind])
-        collision = UICollisionBehavior(items: [currentWind,tableView])
-        collision.translatesReferenceBoundsIntoBoundary = true
-        dynamicAnimator.addBehavior(gravity)
-        dynamicAnimator.addBehavior(collision)
-        
-        
+   
+        detailButton.isEnabled = false
         
         //  UserDefaults.standard.removeObject(forKey: "Cities")
         
@@ -135,7 +127,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.tableView.reloadData()
             }
             )
-            return nil
+            return UIImage(named:"noImage")!
         }
     }
     
@@ -169,19 +161,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         currentCity.center = CGPoint(x: 0, y: 0)
         currentIcon.alpha  = 0.5
-        push = UIPushBehavior(items: [currentWind], mode: .instantaneous)
-        push.pushDirection = CGVector(dx: 0, dy: 2)
-        push.magnitude = 60
-        dynamicAnimator.addBehavior(push)
-       
+    
+        detailButton.isEnabled = true
+
         UIView.beginAnimations("Current Weather View", context: nil)
+
         currentCity.text = cities[indexPath.row].cityName
         currentCity.center =  CGPoint(x: 10, y: 10) //
         currentIcon.alpha = 1
      
         UIView.commitAnimations()
+
         
-        print("You tapped cell number \(indexPath.row).")
+        
+        self.currentCloths.text = cities[indexPath.row].whatCloths()
         self.currentId = indexPath.row
      
         currentIcon.image = icons[cities[indexPath.row].icon]
