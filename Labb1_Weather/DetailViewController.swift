@@ -8,11 +8,6 @@
 
 import UIKit
 
-
-
-
-
-
 class DetailViewController: UIViewController {
     @IBOutlet weak var currentTime: UILabel!
     @IBOutlet weak var iconImage: UIImageView!

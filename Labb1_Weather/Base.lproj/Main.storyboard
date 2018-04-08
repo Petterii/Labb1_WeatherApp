@@ -81,42 +81,42 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RainSun" translatesAutoresizingMaskIntoConstraints="NO" id="JtM-Ga-JsI">
                                 <rect key="frame" x="0.0" y="14" width="375" height="271.5"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88°C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpp-nu-0zw">
-                                <rect key="frame" x="126" y="113" width="147" height="77"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpp-nu-0zw">
+                                <rect key="frame" x="126" y="113" width="102" height="77"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="64"/>
                                 <color key="textColor" red="0.17357560451876963" green="0.26087688709431039" blue="0.78094640540000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="highlightedColor" red="0.46275193469999998" green="1" blue="0.22075748789999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="London" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yvh-Do-OFo">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NA" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yvh-Do-OFo">
                                 <rect key="frame" x="16" y="64" width="327" height="41"/>
                                 <color key="backgroundColor" red="0.9044486722393783" green="0.87499108032145401" blue="0.29020614339078515" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="29"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overcast clouds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nc-Hl-kGh">
-                                <rect key="frame" x="136" y="198" width="124" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nc-Hl-kGh">
+                                <rect key="frame" x="136" y="198" width="28.5" height="20.5"/>
                                 <color key="backgroundColor" red="0.91762467616580312" green="0.78851084478230027" blue="0.20761172359904206" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uqw-Mw-XvR">
-                                <rect key="frame" x="148" y="226.5" width="102" height="30"/>
+                                <rect key="frame" x="148" y="226.5" width="57" height="30"/>
                                 <color key="backgroundColor" red="0.32267915165465699" green="1" blue="0.29918044200926641" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Detailed"/>
                                 <connections>
                                     <segue destination="yKz-et-SO3" kind="show" identifier="DetailedView" id="UtA-Le-aQh"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind: 2 m/s Light breeze" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HJh-QR-5KK">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HJh-QR-5KK">
                                 <rect key="frame" x="0.0" y="264.5" width="359" height="21"/>
                                 <color key="backgroundColor" red="0.84213082897512959" green="0.81470290844976556" blue="0.27021051344157948" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4uq-Ij-gQW">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4uq-Ij-gQW">
                                 <rect key="frame" x="16" y="235" width="124" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -158,7 +158,7 @@
                         <viewLayoutGuide key="safeArea" id="NDd-Hd-ARR"/>
                     </view>
                     <navigationItem key="navigationItem" id="QG7-fn-HeE">
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="0eg-bk-HfK">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="0eg-bk-HfK">
                             <connections>
                                 <segue destination="F63-nD-6gp" kind="show" identifier="AddCity" id="Q0V-Bi-zhI"/>
                             </connections>
@@ -408,7 +408,7 @@
                                 <rect key="frame" x="0.0" y="271" width="375" height="104"/>
                                 <color key="backgroundColor" red="0.17357560450000001" green="0.26087688710000001" blue="0.78094640540000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="D6V-J1-24X">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="City Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="D6V-J1-24X">
                                 <rect key="frame" x="16" y="64" width="343" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="M1i-Rj-tHS"/>
